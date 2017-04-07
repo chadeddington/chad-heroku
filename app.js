@@ -15,8 +15,7 @@ app.get('/', function(req, res) {
 })
 
 // Start server
-var PORT = 8080;
-var server = app.listen(PORT, function () {
-    var port = server.address().port;
-    console.log("App now running on port", port);
+app.set('port', (process.env.PORT || 5000));
+var server = app.listen(app.get('port'), function () {
+    console.log("App now running on port", app.get('port'));
   });
