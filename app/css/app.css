@@ -1,0 +1,31 @@
+html,body {
+	padding: 0px;
+	margin: 0px;
+}
+.section {
+	height: 100vh;
+	background-color: lightblue;
+	padding: 20px;
+	padding-top: 50px;
+}
+
+.navbar {
+	position: fixed;
+	top: 0px;
+	width: 100%;
+	background-color: white;
+}
+
+.navbar > ul {
+	list-style-type: none;
+	padding: 0px;
+}
+
+.navbar > ul > li {
+	display: inline-block;
+	margin: 5px 10px;
+}
+.navbar > ul > li > a {
+	text-decoration: none;
+	color: black;
+}

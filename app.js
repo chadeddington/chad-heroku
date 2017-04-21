@@ -3,11 +3,12 @@ var express = require('express'),
     ejs = require('ejs'),   
     app = express();
 
-app.set('views', './views');
+// location for templates
+app.set('views', './app/views');
 app.set('view engine', 'ejs');
 app.use(bodyParser.json());
-// location for templates
-app.use(express.static(__dirname + "/views"));
+// location for static files
+app.use(express.static(__dirname + "/app"));
 
 // Routes
 app.get('/', function(req, res) {
