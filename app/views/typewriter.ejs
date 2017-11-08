@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include partials/global.ejs %>
+<style>
+  body {
+    font-family: 'Open Sans';
+  }
+  textarea {
+    margin: auto;
+    display: block;
+    font-size: 22px;
+    width: 600px;
+    height: 200px;
+    font-family: monospace;
+  }
+  button {
+    padding: 20px;
+    font-size: 22px;
+    display: block;
+    margin: auto;
+    background-color: deepskyblue;
+    width: 600px;
+    font-family: monospace;
+  }
+
+  #paper {
+    margin-top: 50px;
+    text-align: center;
+    font-family: monospace;
+  }
+</style>
+<body>
+  <%- include partials/nav.ejs %>
+  <div class="app-wrapper">
+    <h1>Typewriter</h1>
+    <br>
+
+    <textarea name="message" id="message" autofocus placeholder="Enter a message into the typewriter!"></textarea>
+    <button onClick='print()'>Print</button>
+
+    <div id="paper"></div>
+  </div>
+
+
+
+<script>
+  var paper = document.querySelector('#paper');
+
+  function updateMessage(val) {
+    alert(val)
+  }
+
+  function type(content, i) {
+  if (i >= content.length) {
+      return;
+    }
+    setTimeout(function() {
+      paper.append(content.charAt(i))
+      type(content, i + 1)
+    }, 50)
+  }
+
+  function print() {
+    var content = document.querySelector('#message').value;
+    if (!content) {
+      var content = 'This is a sample typewriter program that will type out the content of this message. Give it a try!';
+    }
+    paper.innerHTML = '';
+    type(content, 0)
+  }
+</script>
+</body>
+</html>

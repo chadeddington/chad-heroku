@@ -23,6 +23,11 @@ app.get('/snake', function(req, res) {
   res.render('snake');
 })
 
+app.get('/typewriter', function(req, res) {
+  res.render('typewriter');
+})
+
+
 // Start server
 app.set('port', (process.env.PORT || 5000));
 var server = app.listen(app.get('port'), function () {
