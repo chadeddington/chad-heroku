@@ -1,26 +1,21 @@
-<!doctype html>
-<html>
-  <head>
-  	<link rel="stylesheet" type="text/css" href="../css/app.css">
-  </head>
-
-  <body>
-
-    <nav class='navbar'>
-      <ul>
-        <li id="landingLink"><a class='scroll' href="#landing">Landing Page</a></li>
-        <li id="detailsLink"><a class='scroll' href="#details">Details Page</a></li>
-      </ul>
-    </nav>
-
-  	<div id='landing' class='section'>
-  		<h1>Landing Page</h1>
-  	</div>
-
-  	<div id='details' class='section'>
-  		<h1>Details Page</h1>
-  	</div>
-
-    <script src="../js/app.js"></script>
-  </body>
+<!DOCTYPE html>
+<html lang="en">
+<%- include partials/global.ejs %>
+<body>
+  <%- include partials/nav.ejs %>
+  <div class="app-wrapper">
+    <h2>Welcome</h2>
+    <br>
+    <p>
+      Currently, this site is in development.
+    </p>
+    <p> It will be a place where I come
+      and try new things. I may add a blog at some point.
+    </p>
+    <br>
+    <p>
+      Why don't you try out <a href="/snake">HTML Snake</a> while you wait?
+    </p>
+  </div>
+</body>
 </html>

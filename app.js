@@ -1,6 +1,6 @@
 var express = require('express'),
     bodyParser = require('body-parser'),
-    ejs = require('ejs'),   
+    ejs = require('ejs'),
     app = express();
 
 // location for templates
@@ -11,8 +11,16 @@ app.use(bodyParser.json());
 app.use(express.static(__dirname + "/app"));
 
 // Routes
+app.get('/scroll', function(req, res) {
+  res.render('scroll');
+})
+
 app.get('/', function(req, res) {
   res.render('index');
+})
+
+app.get('/snake', function(req, res) {
+  res.render('snake');
 })
 
 // Start server
