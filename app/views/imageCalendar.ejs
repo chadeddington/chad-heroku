@@ -29,7 +29,6 @@
       width: 100vw;
       height: 100vw;
       margin: auto;
-      padding: 20px;
     }
 
   </style>
@@ -43,12 +42,15 @@
   </div>
 
   <script>
+    var date = new Date();
+    var months = ['January', 'February', 'March','April','May','June','July','August','September','October','November','Decembebr'];
+    document.querySelector('.header').innerText = months[date.getMonth()];
     var cal = document.querySelector('.cal-wrapper');
     cal.innerHTML = '';
     for (var i = 0; i < 42; i++) {
       var day = document.createElement('div');
       day.setAttribute('class', 'day');
-      if (i > 3 && i < 34) {
+      if (i > 3 && i < 39) {
         var img = document.createElement('img');
         img.setAttribute('src', "http://lorempixel.com/200/200/city");
         day.appendChild(img);
