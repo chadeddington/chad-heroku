@@ -16,7 +16,7 @@
     }
     .day {
       border: 1px solid white;
-      background-color: black;
+      background-color: lightgrey;
     }
 
     .day img {
@@ -29,6 +29,15 @@
       width: 100vw;
       height: 100vw;
       margin: auto;
+    }
+
+    .date {
+      position: relative;
+      right: 5px;
+      background-color: white;
+      z-index: 2;
+      padding: 0 5px;
+
     }
 
   </style>
@@ -49,10 +58,15 @@
     cal.innerHTML = '';
     for (var i = 0; i < 42; i++) {
       var day = document.createElement('div');
-      day.setAttribute('class', 'day');
-      if (i > 3 && i < 39) {
+
+      if (i > 2 && i < 34) {
+        day.setAttribute('class', 'day');
+        var date = document.createElement('span');
+        date.innerText = i - 2;
+        date.setAttribute('class', 'date');
         var img = document.createElement('img');
         img.setAttribute('src', "http://lorempixel.com/200/200/city");
+        day.appendChild(date);
         day.appendChild(img);
       }
       cal.appendChild(day);
