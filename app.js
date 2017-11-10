@@ -27,6 +27,10 @@ app.get('/typewriter', function(req, res) {
   res.render('typewriter');
 })
 
+app.get('/calendar', function(req, res) {
+  res.render('imageCalendar');
+})
+
 
 // Start server
 app.set('port', (process.env.PORT || 5000));

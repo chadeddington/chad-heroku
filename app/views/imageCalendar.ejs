@@ -1,0 +1,59 @@
+<html>
+  <%- include partials/global.ejs %>
+  <body>
+    <%- include partials/nav.ejs %>
+  <style>
+    h1.header {
+      text-align: center;
+      margin: 50px;
+    }
+    .cal-wrapper {
+      display: grid;
+      width: 100%;
+      height: 86%;
+      grid-template-columns: repeat(7, 1fr);
+      grid-template-rows: repeat(6, 1fr);
+    }
+    .day {
+      border: 1px solid white;
+      background-color: black;
+    }
+
+    .day img {
+      width: 100%;
+    }
+
+    .wrapper {
+      max-width: 1200px;
+      max-height: 1200px;
+      width: 100vw;
+      height: 100vw;
+      margin: auto;
+      padding: 20px;
+    }
+
+  </style>
+
+  <h1 class='header'>
+    Image Calendar
+  </h1>
+  <div class="wrapper">
+    <div class="cal-wrapper">
+    </div>
+  </div>
+
+  <script>
+    var cal = document.querySelector('.cal-wrapper');
+    cal.innerHTML = '';
+    for (var i = 0; i < 42; i++) {
+      var day = document.createElement('div');
+      day.setAttribute('class', 'day');
+      if (i > 3 && i < 34) {
+        var img = document.createElement('img');
+        img.setAttribute('src', "http://lorempixel.com/200/200/city");
+        day.appendChild(img);
+      }
+      cal.appendChild(day);
+    }
+  </script>
+</html>
