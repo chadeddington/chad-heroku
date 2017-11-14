@@ -7,16 +7,14 @@
       text-align: center;
       margin: 50px;
     }
-    .cal-wrapper {
-      display: grid;
-      width: 100%;
-      height: 86%;
-      grid-template-columns: repeat(7, 1fr);
-      grid-template-rows: repeat(6, 1fr);
-    }
+
     .day {
       border: 1px solid white;
       background-color: lightgrey;
+      display: inline-block;
+      width: 200px;
+      height: 200px;
+      position: relative;
     }
 
     .day img {
@@ -24,7 +22,7 @@
     }
 
     .wrapper {
-      max-width: 1200px;
+      max-width: 1420px;
       max-height: 1200px;
       width: 100vw;
       height: 100vw;
@@ -32,13 +30,35 @@
     }
 
     .date {
-      position: relative;
-      right: 5px;
+      position: absolute;
       background-color: white;
+      right: 0px;
       z-index: 2;
       padding: 0 5px;
 
     }
+
+    @media only screen and (max-width: 1415px) {
+      .day {
+        width: 150px;
+        height: 150px;
+      }
+      .wrapper {
+        max-width: 1065;
+      }
+    }
+
+    @media only screen and (max-width: 960px) {
+      .day {
+        width: 100px;
+        height: 100px;
+      }
+      .wrapper {
+        max-width: 715px;
+      }
+    }
+
+
 
   </style>
 
@@ -58,9 +78,9 @@
     cal.innerHTML = '';
     for (var i = 0; i < 42; i++) {
       var day = document.createElement('div');
+      day.setAttribute('class', 'day');
 
       if (i > 2 && i < 34) {
-        day.setAttribute('class', 'day');
         var date = document.createElement('span');
         date.innerText = i - 2;
         date.setAttribute('class', 'date');
