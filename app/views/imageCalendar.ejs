@@ -2,6 +2,16 @@
   <%- include partials/global.ejs %>
   <body>
     <%- include partials/nav.ejs %>
+    <div class="modal">
+      <div class="overlay">
+      </div>
+      <div class='modal-wrapper'>
+        <div class="modal-content">
+          <img class='preview' src="" alt="">
+        </div>
+      </div>
+    </div>
+
   <style>
     h1.header {
       text-align: center;
@@ -48,19 +58,45 @@
       padding: 10px;
     }
 
-    div.img {
+    .day .img {
       height: inherit;
       background-color: red;
     }
 
-    .tooltip {
+    .overlay {
       z-index: 10;
       position: fixed;
-      background-color: #fff;
+      background-color: #555;
+      opacity: .6;
       color: white;
+      width: 100%;
+      height: 100%;
+      position: fixed;
+      top: 0px;
+      z-index: -1;
       text-align: center;
+    }
+
+    .modal {
       visibility: hidden;
     }
+
+    .modal-wrapper {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      position: fixed;
+      top: 0px;
+      width: 100vw;
+      z-index: 11;
+    }
+
+    .modal-content {
+      width: 90%;
+      text-align: center;
+    }
+
 
     @media only screen and (max-width: 1415px) {
       .day {
@@ -104,6 +140,10 @@
       .cal-wrapper {
         padding: 0px 100px;
       }
+
+      .preview {
+        width: 80%;
+      }
     }
 
       @media only screen and (max-width: 425px) {
@@ -116,10 +156,6 @@
   <h1 class='header'>
     Image Calendar
   </h1>
-
-  <div class="tooltip">
-    <img src="" alt="">
-  </div>
 
   <div class='btn-wrapper'>
     <button onClick='login()'>Get Google Photos</button>
@@ -200,7 +236,7 @@
       count++;
       var script = document.createElement('script');
       script.setAttribute('id', 'google-photos-jsonp');
-      script.src = "https://picasaweb.google.com/data/feed/api/user/default/albumid/" + googleAlbum + "?alt=json&imgmax=d&fields=entry(media:group(media:content,media:thumbnail,media:title),gphoto:timestamp)&thumbsize=400u&max-results=1000&start-index=" + googlePage + "&access_token=" + googleToken + "&callback=handleGooglePhotosResponse";
+      script.src = "https://picasaweb.google.com/data/feed/api/user/default/albumid/" + googleAlbum + "?alt=json&imgmax=1024&fields=entry(media:group(media:content,media:thumbnail,media:title),gphoto:timestamp)&thumbsize=400u&max-results=1000&start-index=" + googlePage + "&access_token=" + googleToken + "&callback=handleGooglePhotosResponse";
       document.querySelector('body').appendChild(script);
     }
 
@@ -221,6 +257,7 @@
           var picDate = new Date(parseInt(pic.gphoto$timestamp.$t));
           result.date = picDate.toLocaleString().match(/\/(\d+)\//)[1];
           result.thumb = pic.media$group.media$thumbnail[0].url;
+          result.full = pic.media$group.media$content[0].url;
           result.type = pic.media$group.media$content[0].type;
           return result;
         })
@@ -240,6 +277,7 @@
         img.style.backgroundPosition = 'center';
         img.style.backgroundSize = 'cover';
         img.thumb = image.thumb;
+        img.full = image.full;
       })
     }
 
@@ -282,23 +320,35 @@
         img.id = 'date-'+dateText;
         day.appendChild(dateEl);
         day.appendChild(img);
-        img.addEventListener('mouseover', e => {
-          $('.tooltip').style.left = e.clientX + 40;
-          $('.tooltip').style.top = e.clientY;
-          console.log(e.target.style.backgroundImage);
-          $('.tooltip img').src = e.target.thumb ? e.target.thumb : '';
-          $('.tooltip').style.visibility = 'visible';
+        img.addEventListener('click', e => {
+          $('.preview').src = e.target.full ? e.target.full : '';
+          $('.overlay').style.zIndex = 10;
+          $('.modal').style.visibility = 'visible';
         });
-        img.addEventListener('mousemove', e => {
-          $('.tooltip').style.left = e.clientX + 40;
-          $('.tooltip').style.top = e.clientY;
-        });
-        img.addEventListener('mouseout', e => {
-          console.log('Mouse out')
-          $('.tooltip').style.visibility = 'hidden';
-        });
+        // img.addEventListener('mouseover', e => {
+        //   $('.overlay').style.left = e.clientX + 40;
+        //   $('.overlay').style.top = e.clientY;
+        //   console.log(e.target.style.backgroundImage);
+        //   $('.overlay img').src = e.target.thumb ? e.target.thumb : '';
+        //   $('.overlay').style.visibility = 'visible';
+        // });
+        // img.addEventListener('mousemove', e => {
+        //   $('.overlay').style.left = e.clientX + 40;
+        //   $('.overlay').style.top = e.clientY;
+        // });
+        // img.addEventListener('mouseout', e => {
+        //   console.log('Mouse out')
+        //   $('.overlay').style.visibility = 'hidden';
+        // });
       }
       cal.appendChild(day);
     }
+
+    // Listener for the modal
+    $('.modal').addEventListener('click', function() {
+      this.style.zIndex = -1;
+      this.style.visibility = 'hidden';
+      $('.preview').src = '';
+    })
   </script>
 </html>
