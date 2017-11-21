@@ -39,6 +39,29 @@
       opacity: .7;
     }
 
+    .btn-wrapper {
+      text-align: center;
+      margin-bottom: 50px;
+    }
+
+    .btn-wrapper button {
+      padding: 10px;
+    }
+
+    div.img {
+      height: inherit;
+      background-color: red;
+    }
+
+    .tooltip {
+      z-index: 10;
+      position: fixed;
+      background-color: #fff;
+      color: white;
+      text-align: center;
+      visibility: hidden;
+    }
+
     @media only screen and (max-width: 1415px) {
       .day {
         width: 150px;
@@ -62,8 +85,12 @@
     @media only screen and (max-width: 767px) {
       .day {
         width: 100%;
-        height: auto;
+        height: 200px;
         border: none;
+      }
+
+      .placeholder {
+        height: 0px;
       }
 
       .date {
@@ -89,29 +116,187 @@
   <h1 class='header'>
     Image Calendar
   </h1>
+
+  <div class="tooltip">
+    <img src="" alt="">
+  </div>
+
+  <div class='btn-wrapper'>
+    <button onClick='login()'>Get Google Photos</button>
+  </div>
+
   <div class="wrapper">
     <div class="cal-wrapper">
     </div>
   </div>
 
+  <script src="https://apis.google.com/js/api.js"></script>
   <script>
-    var date = new Date();
+    // load google API
+    var googleAuth;
+    var googleToken = '';
+    var autoBackupAlbumRef = '';
+    var googlePage = 1;
+    var googleAlbum = '';
+    var today = new Date();
+    var year = today.getFullYear() - 1;
+    var month = today.getMonth() + 1
+    var dateStart = month + '/1/' + year;
+    var dateEnd;
+    (month == 12) ? dateEnd = '1/1/' + year : dateEnd = month + 1 + '/1/' + year;
+    var outsideRange = false;
+    var pix = [];
+    var count = 2;
+    // Selector alias
+    var $ = document.querySelector.bind(document);
+    var $$ = document.querySelectorAll.bind(document);
+
+    gapi.load('client:auth2', function() {
+        gapi.client.init({
+          'clientId': '1073743336431-k4mr9nfbtl1f4e83ml13pjbitftu2kpg.apps.googleusercontent.com',
+          'scope': 'https://picasaweb.google.com/data/',
+        }).then(function () {
+            googleAuth = gapi.auth2.getAuthInstance();
+        }).catch(function(err) {
+            console.log("There was an error initializing google", err);
+        });
+      });
+
+    // Log in with Google
+    function login() {
+       googleAuth.signIn().then(function(e) {
+         googleToken = gapi.auth2.getAuthInstance().currentUser.get().getAuthResponse().access_token;
+        startPhotosFetch();
+      });
+    }
+
+    // Fetch the photos
+    function startPhotosFetch() {
+      console.log('Get photos')
+      getAutoBackupRef().then(res => {
+        if (res) getPhotosFromAlbum(res);
+      }).catch(err => {console.log('Error ', err)});
+    }
+
+    // Get auto back up ref
+    function getAutoBackupRef() {
+      return fetch('https://picasaweb.google.com/data/feed/api/user/default?alt=json&access_token=' + googleToken)
+        .then(res => {
+          return res.json()
+        }).then(json => {
+          googleAlbum = json.feed.entry[0].gphoto$id.$t;
+          return googleAlbum;
+          // return json.feed.entry[0].id.$t;
+        }).catch(err => console.log('error', err));
+    }
+
+    // Get photos from album
+    function getPhotosFromAlbum(id) {
+      getBatch();
+    }
+
+    function getBatch() {
+      console.log(count);
+      count++;
+      var script = document.createElement('script');
+      script.setAttribute('id', 'google-photos-jsonp');
+      script.src = "https://picasaweb.google.com/data/feed/api/user/default/albumid/" + googleAlbum + "?alt=json&imgmax=d&fields=entry(media:group(media:content,media:thumbnail,media:title),gphoto:timestamp)&thumbsize=400u&max-results=1000&start-index=" + googlePage + "&access_token=" + googleToken + "&callback=handleGooglePhotosResponse";
+      document.querySelector('body').appendChild(script);
+    }
+
+    function handleGooglePhotosResponse(response) {
+      response.feed.entry.forEach(item => {
+        // Within the timeperiod we want
+        if (item.gphoto$timestamp.$t >= Date.parse(dateStart) && item.gphoto$timestamp.$t < Date.parse(dateEnd)) {
+          pix.push(item)
+        } else if(item.gphoto$timestamp.$t < dateStart) {
+          outsideRange = true;
+        }
+      })
+      if (count > 15 || outsideRange || response.feed.entry.length < 1000) {
+        console.log(pix);
+        // grab dates for pictures
+        var results = pix.map(pic => {
+          var result = {};
+          var picDate = new Date(parseInt(pic.gphoto$timestamp.$t));
+          result.date = picDate.toLocaleString().match(/\/(\d+)\//)[1];
+          result.thumb = pic.media$group.media$thumbnail[0].url;
+          result.type = pic.media$group.media$content[0].type;
+          return result;
+        })
+        console.log("Results: ", results);
+        displayImages(results);
+      } else {
+        // keep getting fetching
+        googlePage += 1000
+        getBatch();
+      }
+    }
+
+    function displayImages(images) {
+      images.forEach(image => {
+        var img = document.querySelector('#date-'+image.date);
+        img.style.backgroundImage = 'url('+image.thumb+')';
+        img.style.backgroundPosition = 'center';
+        img.style.backgroundSize = 'cover';
+        img.thumb = image.thumb;
+      })
+    }
+
+    /********************
+    * Draw the calendar
+    *******************/
+    var dateObj = new Date();
     var months = ['January', 'February', 'March','April','May','June','July','August','September','October','November','Decembebr'];
-    document.querySelector('.header').innerText = months[date.getMonth()];
+    // Display the Month Name
+    document.querySelector('.header').innerText = months[dateObj.getMonth()];
+
     var cal = document.querySelector('.cal-wrapper');
     cal.innerHTML = '';
+
+    var weekday = dateObj.getDay();
+    var date = dateObj.getDate();
+    var monthDays = 30;
+
+    while (date > 1) {
+      if (weekday > 0) {
+        weekday-- ;
+      } else {
+        weekday = 6;
+      }
+      date--;
+    }
+    var offset = weekday;
+
     for (var i = 0; i < 42; i++) {
       var day = document.createElement('div');
-      day.setAttribute('class', 'day');
-
-      if (i > 2 && i < 34) {
-        var date = document.createElement('span');
-        date.innerText = i - 2;
-        date.setAttribute('class', 'date');
-        var img = document.createElement('img');
-        img.setAttribute('src', "http://lorempixel.com/200/200/city");
-        day.appendChild(date);
+      day.setAttribute('class', 'day placeholder');
+      if (i >= offset && i < monthDays + offset) {
+        day.setAttribute('class', 'day');
+        var dateEl = document.createElement('span');
+        var dateText = i - offset + 1;
+        dateEl.innerText = dateText;
+        dateEl.setAttribute('class', 'date');
+        var img = document.createElement('div');
+        img.setAttribute('class', 'img');
+        img.id = 'date-'+dateText;
+        day.appendChild(dateEl);
         day.appendChild(img);
+        img.addEventListener('mouseover', e => {
+          $('.tooltip').style.left = e.clientX + 40;
+          $('.tooltip').style.top = e.clientY;
+          console.log(e.target.style.backgroundImage);
+          $('.tooltip img').src = e.target.thumb ? e.target.thumb : '';
+          $('.tooltip').style.visibility = 'visible';
+        });
+        img.addEventListener('mousemove', e => {
+          $('.tooltip').style.left = e.clientX + 40;
+          $('.tooltip').style.top = e.clientY;
+        });
+        img.addEventListener('mouseout', e => {
+          console.log('Mouse out')
+          $('.tooltip').style.visibility = 'hidden';
+        });
       }
       cal.appendChild(day);
     }

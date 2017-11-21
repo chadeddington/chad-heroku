@@ -1,7 +1,9 @@
 var express = require('express'),
     bodyParser = require('body-parser'),
     ejs = require('ejs'),
-    app = express();
+    app = express(),
+    fetch = require('node-fetch'),
+    calendar = require('./utils/calendar');
 
 // location for templates
 app.set('views', './app/views');
@@ -13,24 +15,22 @@ app.use(express.static(__dirname + "/app"));
 // Routes
 app.get('/scroll', function(req, res) {
   res.render('scroll');
-})
-
+});
 app.get('/', function(req, res) {
   res.render('index');
-})
-
+});
 app.get('/snake', function(req, res) {
   res.render('snake');
 })
-
 app.get('/typewriter', function(req, res) {
   res.render('typewriter');
-})
-
+});
 app.get('/calendar', function(req, res) {
   res.render('imageCalendar');
-})
+});
 
+// Helpers
+app.get('/getGooglePhotos/:albumId', calendar.getPhotos);
 
 // Start server
 app.set('port', (process.env.PORT || 5000));
