@@ -56,6 +56,10 @@
 
     .btn-wrapper button {
       padding: 10px;
+      margin-left: 20px;
+      font-size: 16px;
+      background-color: mediumslateblue;
+      color: white;
     }
 
     .day .img {
@@ -97,13 +101,24 @@
       text-align: center;
     }
 
+    .spinner {
+      text-align: center;
+      visibility: hidden;
+    }
+
+    p {
+      max-width: 1400px;
+      padding: 50px;
+      margin: auto;
+    }
+
 
     @media only screen and (max-width: 1415px) {
       .day {
         width: 150px;
         height: 150px;
       }
-      .wrapper {
+      .wrapper, p {
         max-width: 1065;
       }
     }
@@ -154,12 +169,47 @@
   </style>
 
   <h1 class='header'>
+    The Image Calendar
+  </h1>
+
+  <p>
+    Welcome to the Image Calendar!
+    <br>
+    <br>
+    This may look like a regular calendar showing the days of the month,
+    but you can give this calendar super powers! Clicking the button will fetch
+    your photos from this time last year and display them on the day they were taken.
+    <br>
+    <br>
+    &Tab;Wouldn't it be fun to see what you were up to this time last year in once quick glance?
+  </p>
+
+  <div class='btn-wrapper'>
+    Press the button to get super powers!
+    <button onClick='login()'>Get Google Photos</button>
+  </div>
+
+  <div class="spinner">
+    <svg version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+       width="40px" height="40px" viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;" xml:space="preserve">
+      <path fill="mediumslateblue" d="M43.935,25.145c0-10.318-8.364-18.683-18.683-18.683c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615c8.072,0,14.615,6.543,14.615,14.615H43.935z">
+        <animateTransform attributeType="xml"
+          attributeName="transform"
+          type="rotate"
+          from="0 25 25"
+          to="360 25 25"
+          dur="0.6s"
+          repeatCount="indefinite"/>
+        </path>
+    </svg>
+    <div class="loading-text"></div>
+  </div>
+
+  <h1 class='month-header header'>
     Image Calendar
   </h1>
 
-  <div class='btn-wrapper'>
-    <button onClick='login()'>Get Google Photos</button>
-  </div>
+
 
   <div class="wrapper">
     <div class="cal-wrapper">
@@ -200,6 +250,8 @@
 
     // Log in with Google
     function login() {
+      $('.spinner').style.visibility = 'visible';
+      $('.loading-text').innerText = "Logging in to Google...";
        googleAuth.signIn().then(function(e) {
          googleToken = gapi.auth2.getAuthInstance().currentUser.get().getAuthResponse().access_token;
         startPhotosFetch();
@@ -208,7 +260,7 @@
 
     // Fetch the photos
     function startPhotosFetch() {
-      console.log('Get photos')
+      $('.loading-text').innerText = "Looking for Google Photos. This may take a while...";
       getAutoBackupRef().then(res => {
         if (res) getPhotosFromAlbum(res);
       }).catch(err => {console.log('Error ', err)});
@@ -232,7 +284,6 @@
     }
 
     function getBatch() {
-      console.log(count);
       count++;
       var script = document.createElement('script');
       script.setAttribute('id', 'google-photos-jsonp');
@@ -241,6 +292,7 @@
     }
 
     function handleGooglePhotosResponse(response) {
+      $('.loading-text').innerText = "Sorting through photos...";
       response.feed.entry.forEach(item => {
         // Within the timeperiod we want
         if (item.gphoto$timestamp.$t >= Date.parse(dateStart) && item.gphoto$timestamp.$t < Date.parse(dateEnd)) {
@@ -279,6 +331,8 @@
         img.thumb = image.thumb;
         img.full = image.full;
       })
+      $('.loading-text').innerText = "";
+      $('.spinner').style.visibility = 'hidden';
     }
 
     /********************
@@ -287,7 +341,7 @@
     var dateObj = new Date();
     var months = ['January', 'February', 'March','April','May','June','July','August','September','October','November','Decembebr'];
     // Display the Month Name
-    document.querySelector('.header').innerText = months[dateObj.getMonth()];
+    document.querySelector('.month-header').innerText = months[dateObj.getMonth()];
 
     var cal = document.querySelector('.cal-wrapper');
     cal.innerHTML = '';
