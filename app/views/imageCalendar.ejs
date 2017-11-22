@@ -1,172 +1,22 @@
 <html>
   <%- include partials/global.ejs %>
+  <link rel="stylesheet" href="css/calendar.css">
+
   <body>
-    <%- include partials/nav.ejs %>
-    <div class="modal">
-      <div class="overlay">
-      </div>
-      <div class='modal-wrapper'>
-        <div class="modal-content">
-          <img class='preview' src="" alt="">
+  <%- include partials/nav.ejs %>
+  <div class="modal">
+    <div class="overlay">
+    </div>
+    <div class='modal-wrapper'>
+      <div class="modal-content">
+        <div class="img-controls">
+          <button class='prev-btn img-control'>Previous</button>
+          <button class='next-btn img-control'>Next</button>
         </div>
+        <img class='preview' src="" alt="">
       </div>
     </div>
-
-  <style>
-    h1.header {
-      text-align: center;
-      margin: 50px;
-    }
-
-    .day {
-      border: 1px solid white;
-      background-color: #EEEEEE;
-      display: inline-block;
-      width: 200px;
-      height: 200px;
-      position: relative;
-    }
-
-    .day img {
-      width: 100%;
-    }
-
-    .wrapper {
-      max-width: 1420px;
-      max-height: 1200px;
-      width: 100vw;
-      height: 100vw;
-      margin: auto;
-      text-align: center;
-    }
-
-    .date {
-      position: absolute;
-      background-color: white;
-      right: 0px;
-      z-index: 2;
-      padding: 0 5px;
-      opacity: .7;
-    }
-
-    .btn-wrapper {
-      text-align: center;
-      margin-bottom: 50px;
-    }
-
-    .btn-wrapper button {
-      padding: 10px;
-      margin-left: 20px;
-      font-size: 16px;
-      background-color: mediumslateblue;
-      color: white;
-    }
-
-    .day .img {
-      height: inherit;
-      background-color: #4DC;
-    }
-
-    .overlay {
-      z-index: 10;
-      position: fixed;
-      background-color: black;
-      opacity: .8;
-      color: white;
-      width: 100%;
-      height: 100%;
-      position: fixed;
-      top: 0px;
-      z-index: -1;
-      text-align: center;
-    }
-
-    .modal {
-      visibility: hidden;
-    }
-
-    .modal-wrapper {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-      position: fixed;
-      top: 0px;
-      width: 100vw;
-      z-index: 11;
-    }
-
-    .modal-content {
-      width: 90%;
-      text-align: center;
-    }
-
-    .spinner {
-      text-align: center;
-      visibility: hidden;
-    }
-
-    p {
-      max-width: 1400px;
-      padding: 50px;
-      margin: auto;
-    }
-
-
-    @media only screen and (max-width: 1415px) {
-      .day {
-        width: 150px;
-        height: 150px;
-      }
-      .wrapper, p {
-        max-width: 1065;
-      }
-    }
-
-    @media only screen and (max-width: 960px) {
-      .day {
-        width: 100px;
-        height: 100px;
-      }
-      .wrapper {
-        max-width: 715px;
-      }
-    }
-
-    @media only screen and (max-width: 767px) {
-      .day {
-        width: 100%;
-        height: 300px;
-        border: none;
-      }
-
-      .placeholder {
-        height: 0px;
-      }
-
-      .date {
-        padding: 15px 25px;
-      }
-
-      .wrapper {
-        max-width: 715px;
-      }
-
-      .cal-wrapper {
-        padding: 0px 100px;
-      }
-
-      .preview {
-        width: 80%;
-      }
-    }
-
-      @media only screen and (max-width: 425px) {
-        .cal-wrapper {
-          padding: 0px 50px;
-        }
-      }
-  </style>
+  </div>
 
   <h1 class='header'>
     The Image Calendar
@@ -176,12 +26,12 @@
     Welcome to the Image Calendar!
     <br>
     <br>
-    This may look like a regular calendar showing the days of the month,
+    This may look like a regular calendar,
     but you can give this calendar super powers! Clicking the button will fetch
-    your photos from this time last year and display them on the day they were taken.
+    your photos from last year and display them on the day they were taken!
     <br>
     <br>
-    &Tab;Wouldn't it be fun to see what you were up to this time last year in once quick glance?
+    Wouldn't it be fun to see what you were up to this very day last year?
   </p>
 
   <div class='btn-wrapper'>
@@ -209,200 +59,11 @@
     Image Calendar
   </h1>
 
-
-
   <div class="wrapper">
     <div class="cal-wrapper">
     </div>
   </div>
 
   <script src="https://apis.google.com/js/api.js"></script>
-  <script>
-    // load google API
-    var googleAuth;
-    var googleToken = '';
-    var autoBackupAlbumRef = '';
-    var googlePage = 1;
-    var googleAlbum = '';
-    var today = new Date();
-    var year = today.getFullYear() - 1;
-    var month = today.getMonth() + 1
-    var dateStart = month + '/1/' + year;
-    var dateEnd;
-    (month == 12) ? dateEnd = '1/1/' + year : dateEnd = month + 1 + '/1/' + year;
-    var outsideRange = false;
-    var pix = [];
-    var count = 2;
-    // Selector alias
-    var $ = document.querySelector.bind(document);
-    var $$ = document.querySelectorAll.bind(document);
-
-    gapi.load('client:auth2', function() {
-        gapi.client.init({
-          'clientId': '1073743336431-k4mr9nfbtl1f4e83ml13pjbitftu2kpg.apps.googleusercontent.com',
-          'scope': 'https://picasaweb.google.com/data/',
-        }).then(function () {
-            googleAuth = gapi.auth2.getAuthInstance();
-        }).catch(function(err) {
-            console.log("There was an error initializing google", err);
-        });
-      });
-
-    // Log in with Google
-    function login() {
-      $('.spinner').style.visibility = 'visible';
-      $('.loading-text').innerText = "Logging in to Google...";
-       googleAuth.signIn().then(function(e) {
-         googleToken = gapi.auth2.getAuthInstance().currentUser.get().getAuthResponse().access_token;
-        startPhotosFetch();
-      });
-    }
-
-    // Fetch the photos
-    function startPhotosFetch() {
-      $('.loading-text').innerText = "Looking for Google Photos. This may take a while...";
-      getAutoBackupRef().then(res => {
-        if (res) getPhotosFromAlbum(res);
-      }).catch(err => {console.log('Error ', err)});
-    }
-
-    // Get auto back up ref
-    function getAutoBackupRef() {
-      return fetch('https://picasaweb.google.com/data/feed/api/user/default?alt=json&access_token=' + googleToken)
-        .then(res => {
-          return res.json()
-        }).then(json => {
-          googleAlbum = json.feed.entry[0].gphoto$id.$t;
-          return googleAlbum;
-          // return json.feed.entry[0].id.$t;
-        }).catch(err => console.log('error', err));
-    }
-
-    // Get photos from album
-    function getPhotosFromAlbum(id) {
-      getBatch();
-    }
-
-    function getBatch() {
-      count++;
-      var script = document.createElement('script');
-      script.setAttribute('id', 'google-photos-jsonp');
-      script.src = "https://picasaweb.google.com/data/feed/api/user/default/albumid/" + googleAlbum + "?alt=json&imgmax=1024&fields=entry(media:group(media:content,media:thumbnail,media:title),gphoto:timestamp)&thumbsize=400u&max-results=1000&start-index=" + googlePage + "&access_token=" + googleToken + "&callback=handleGooglePhotosResponse";
-      document.querySelector('body').appendChild(script);
-    }
-
-    function handleGooglePhotosResponse(response) {
-      $('.loading-text').innerText = "Sorting through photos...";
-      response.feed.entry.forEach(item => {
-        // Within the timeperiod we want
-        if (item.gphoto$timestamp.$t >= Date.parse(dateStart) && item.gphoto$timestamp.$t < Date.parse(dateEnd)) {
-          pix.push(item)
-        } else if(item.gphoto$timestamp.$t < dateStart) {
-          outsideRange = true;
-        }
-      })
-      if (count > 15 || outsideRange || response.feed.entry.length < 1000) {
-        console.log(pix);
-        // grab dates for pictures
-        var results = pix.map(pic => {
-          var result = {};
-          var picDate = new Date(parseInt(pic.gphoto$timestamp.$t));
-          result.date = picDate.toLocaleString().match(/\/(\d+)\//)[1];
-          result.thumb = pic.media$group.media$thumbnail[0].url;
-          result.full = pic.media$group.media$content[0].url;
-          result.type = pic.media$group.media$content[0].type;
-          return result;
-        })
-        console.log("Results: ", results);
-        displayImages(results);
-      } else {
-        // keep getting fetching
-        googlePage += 1000
-        getBatch();
-      }
-    }
-
-    function displayImages(images) {
-      images.forEach(image => {
-        var img = document.querySelector('#date-'+image.date);
-        img.style.backgroundImage = 'url('+image.thumb+')';
-        img.style.backgroundPosition = 'center';
-        img.style.backgroundSize = 'cover';
-        img.thumb = image.thumb;
-        img.full = image.full;
-      })
-      $('.loading-text').innerText = "";
-      $('.spinner').style.visibility = 'hidden';
-    }
-
-    /********************
-    * Draw the calendar
-    *******************/
-    var dateObj = new Date();
-    var months = ['January', 'February', 'March','April','May','June','July','August','September','October','November','Decembebr'];
-    // Display the Month Name
-    document.querySelector('.month-header').innerText = months[dateObj.getMonth()];
-
-    var cal = document.querySelector('.cal-wrapper');
-    cal.innerHTML = '';
-
-    var weekday = dateObj.getDay();
-    var date = dateObj.getDate();
-    var monthDays = 30;
-
-    while (date > 1) {
-      if (weekday > 0) {
-        weekday-- ;
-      } else {
-        weekday = 6;
-      }
-      date--;
-    }
-    var offset = weekday;
-
-    for (var i = 0; i < 42; i++) {
-      var day = document.createElement('div');
-      day.setAttribute('class', 'day placeholder');
-      if (i >= offset && i < monthDays + offset) {
-        day.setAttribute('class', 'day');
-        var dateEl = document.createElement('span');
-        var dateText = i - offset + 1;
-        dateEl.innerText = dateText;
-        dateEl.setAttribute('class', 'date');
-        var img = document.createElement('div');
-        img.setAttribute('class', 'img');
-        img.id = 'date-'+dateText;
-        day.appendChild(dateEl);
-        day.appendChild(img);
-        img.addEventListener('click', e => {
-          $('.preview').src = e.target.full ? e.target.full : '';
-          $('.overlay').style.zIndex = 10;
-          $('.modal').style.visibility = 'visible';
-        });
-        // img.addEventListener('mouseover', e => {
-        //   $('.overlay').style.left = e.clientX + 40;
-        //   $('.overlay').style.top = e.clientY;
-        //   console.log(e.target.style.backgroundImage);
-        //   $('.overlay img').src = e.target.thumb ? e.target.thumb : '';
-        //   $('.overlay').style.visibility = 'visible';
-        // });
-        // img.addEventListener('mousemove', e => {
-        //   $('.overlay').style.left = e.clientX + 40;
-        //   $('.overlay').style.top = e.clientY;
-        // });
-        // img.addEventListener('mouseout', e => {
-        //   console.log('Mouse out')
-        //   $('.overlay').style.visibility = 'hidden';
-        // });
-      }
-      cal.appendChild(day);
-    }
-
-    // Listener for the modal
-    $('.modal').addEventListener('click', function() {
-      this.style.zIndex = -1;
-      this.style.visibility = 'hidden';
-      $('.preview').src = '';
-    })
-  </script>
+  <script src="js/calendar.js"></script>
 </html>
