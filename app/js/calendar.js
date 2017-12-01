@@ -116,7 +116,10 @@ function displayImages(images) {
   images.forEach(image => {
     var img = document.querySelector('#date-'+image.date);
     img.all = (img && img.all) ? img.all.concat([image.full]) : [];
+    img.querySelector('.img-count').innerText = img.all.length || 1;
+    img.querySelector('.img-count-wrapper').style.display = 'block';
     img.style.backgroundImage = 'url('+image.thumb+')';
+    img.style.cursor = 'pointer';
     img.style.backgroundPosition = 'center';
     img.style.backgroundSize = 'cover';
     img.thumb = image.thumb;
@@ -176,19 +179,33 @@ for (var i = 0; i < 42; i++) {
   var day = document.createElement('div');
   day.setAttribute('class', 'day placeholder');
   if (i >= offset && i < monthDays + offset) {
+    // The calendar day
     day.setAttribute('class', 'day');
+    // The date span
     var dateEl = document.createElement('span');
     var dateText = i - offset + 1;
     dateEl.innerText = dateText;
     dateEl.setAttribute('class', 'date');
+    // The image for the day
     var img = document.createElement('div');
     img.setAttribute('class', 'img');
     img.id = 'date-'+dateText;
+    // The image repeatCount
+    var imgCountWrapper = document.createElement('span');
+    imgCountWrapper.setAttribute('class', 'img-count-wrapper');
+    var imgCount = document.createElement('span');
+    imgCount.setAttribute('class', 'img-count');
+    // The Image Icon
+    var icon = document.createElement('i');
+    icon.setAttribute('class', 'img-icon');
+    imgCountWrapper.appendChild(icon);
+    imgCountWrapper.appendChild(imgCount);
+    img.appendChild(imgCountWrapper);
     day.appendChild(dateEl);
     day.appendChild(img);
     img.addEventListener('click', e => {
-      var target = e.target;
-      activeImageCollection = e.target.all;
+      var target = e.currentTarget;
+      activeImageCollection = target.all;
       $('.preview').src = target.full ? target.full : '';
       // Reset index;
       activeImageIndex = activeImageCollection.length - 1;

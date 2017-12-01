@@ -47,14 +47,35 @@ h1.header {
 .day .img {
   height: inherit;
   background-color: #4DC;
-  cursor: pointer;
+}
+
+.img-count-wrapper {
+  background-color: white;
+  position: absolute;
+  bottom: 0px;
+  padding: 0 5px;
+  display: none;
+}
+
+.img-count {
+  font-size: 18px;
+}
+
+.img-icon {
+  background-image: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/PjwhRE9DVFlQRSBzdmcgIFBVQkxJQyAnLS8vVzNDLy9EVEQgU1ZHIDEuMS8vRU4nICAnaHR0cDovL3d3dy53My5vcmcvR3JhcGhpY3MvU1ZHLzEuMS9EVEQvc3ZnMTEuZHRkJz48c3ZnIGhlaWdodD0iNTEycHgiIGlkPSJMYXllcl8xIiBzdHlsZT0iZW5hYmxlLWJhY2tncm91bmQ6bmV3IDAgMCA1MTIgNTEyOyIgdmVyc2lvbj0iMS4xIiB2aWV3Qm94PSIwIDAgNTEyIDUxMiIgd2lkdGg9IjUxMnB4IiB4bWw6c3BhY2U9InByZXNlcnZlIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIj48Zz48Zz48cGF0aCBkPSJNNDU3LjYsMTQwLjJsLTgyLjUtNGwtNC44LTUzLjhjLTEtMTEuMy0xMS4xLTE5LjItMjIuOS0xOC4zTDUxLjQsODguNGMtMTEuOCwxLTIwLjMsMTAuNS0xOS40LDIxLjdsMjEuMiwyMzUuOCAgICBjMSwxMS4zLDExLjIsMTkuMiwyMi45LDE4LjNsMTUtMS4ybC0yLjQsNDUuOGMtMC42LDEyLjYsOS4yLDIyLjgsMjIuNCwyMy41TDQ0MS4zLDQ0OGMxMy4yLDAuNiwyNC4xLTguNiwyNC44LTIxLjJMNDgwLDE2My41ICAgIEM0ODAuNiwxNTEsNDcwLjcsMTQwLjgsNDU3LjYsMTQwLjJ6IE0xMDIuNiwxNDUuNWwtNy4xLDEzNC44TDc4LjEsMzA1bC0xNi0xNzhjMC0wLjIsMC0wLjMsMC0wLjVzMC0wLjMsMC0wLjUgICAgYzAuNS01LDQuMy05LDkuNS05LjRsMjYxLTIxLjRjNS4yLTAuNCw5LjcsMywxMC41LDcuOWMwLDAuMiwwLjMsMC4yLDAuMywwLjRjMCwwLjEsMC4zLDAuMiwwLjMsMC40bDIuNywzMC44bC0yMTktMTAuNSAgICBDMTE0LjIsMTIzLjgsMTAzLjIsMTMzLDEwMi42LDE0NS41eiBNNDM2LjcsMzgyLjRsLTQ2LjctNTUuM2wtMjcuNS0zMi43Yy0yLjQtMi45LTYuMy01LjMtMTAuNi01LjVjLTQuMy0wLjItNy41LDEuNS0xMS4xLDQuMSAgICBsLTE2LjQsMTEuOWMtMy41LDIuMS02LjIsMy41LTkuOSwzLjNjLTMuNi0wLjItNi44LTEuNi05LjEtMy44Yy0wLjgtMC44LTIuMy0yLjItMy41LTMuNGwtNDIuOC00OC45Yy0zLjEtMy45LTguMi02LjQtMTMuOC02LjcgICAgYy01LjctMC4zLTExLjIsMi4xLTE0LjgsNS42TDEyOS40LDM1OS44bC02LjgsNy40bDAuMy02LjhsNi44LTEyOC45bDMuMy02Mi45YzAtMC4yLDAtMC40LDAtMC41YzAtMC4yLDAtMC40LDAtMC41ICAgIGMxLjQtNS40LDYuMi05LjMsMTEuOS05bDIwNC4yLDkuOGwyOC43LDEuNGw1OC4zLDIuOGM1LjgsMC4zLDEwLjMsNC43LDEwLjQsMTAuMmMwLDAuMiwwLjMsMC4zLDAuMywwLjVjMCwwLjIsMC4zLDAuMywwLjMsMC41ICAgIEw0MzYuNywzODIuNHoiLz48L2c+PHBhdGggZD0iTTM3My4yLDI2Mi4zYzE5LjQsMCwzNS4yLTE1LjgsMzUuMi0zNS4ycy0xNS43LTM1LjItMzUuMi0zNS4yYy0xOS40LDAtMzUuMiwxNS43LTM1LjIsMzUuMlMzNTMuNywyNjIuMywzNzMuMiwyNjIuM3oiLz48L2c+PC9zdmc+);
+  background-position: center center;
+  background-size: 25px 25px;
+  width: 25px;
+  height: 25px;
+  display: inline-block;
+  margin-right: 5px;
 }
 
 .overlay {
   z-index: 10;
   position: fixed;
   background-color: black;
-  opacity: .8;
+  opacity: .85;
   color: white;
   width: 100%;
   height: 100%;
