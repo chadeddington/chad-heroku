@@ -9,7 +9,12 @@ var year = today.getFullYear() - 1;
 var month = today.getMonth() + 1
 var dateStart = month + '/1/' + year;
 var dateEnd;
-(month == 12) ? dateEnd = '1/1/' + year : dateEnd = month + 1 + '/1/' + year;
+if (month == 12) {
+  year++;
+  dateEnd = '1/1/' + year;
+} else {
+  dateEnd = month + 1 + '/1/' + year;
+}
 var outsideRange = false;
 var pix = [];
 var count = 2;
@@ -91,6 +96,7 @@ function handleGooglePhotosResponse(response) {
       var result = {};
       var picDate = new Date(parseInt(pic.gphoto$timestamp.$t));
       result.date = picDate.toLocaleString().match(/\/(\d+)\//)[1];
+      console.log(result.date);
       result.thumb = pic.media$group.media$thumbnail[0].url;
       result.full = pic.media$group.media$content[0].url;
       result.type = pic.media$group.media$content[0].type;
@@ -109,7 +115,7 @@ function handleGooglePhotosResponse(response) {
 function displayImages(images) {
   images.forEach(image => {
     var img = document.querySelector('#date-'+image.date);
-    img.all = img.all ? img.all.concat([image.full]) : [];
+    img.all = (img && img.all) ? img.all.concat([image.full]) : [];
     img.style.backgroundImage = 'url('+image.thumb+')';
     img.style.backgroundPosition = 'center';
     img.style.backgroundSize = 'cover';
@@ -125,16 +131,16 @@ function displayImages(images) {
 * Draw the calendar
 *******************/
 var dateObj = new Date();
-var months = ['January', 'February', 'March','April','May','June','July','August','September','October','November','Decembebr'];
+var months = ['January', 'February', 'March','April','May','June','July','August','September','October','November','December'];
 // Display the Month Name
-document.querySelector('.month-header').innerText = months[dateObj.getMonth()];
+document.querySelector('.month-header').innerText = months[month - 1];
 
 var cal = document.querySelector('.cal-wrapper');
 cal.innerHTML = '';
 
 var weekday = dateObj.getDay();
 var date = dateObj.getDate();
-var monthDays = 30;
+var monthDays = new Date(dateObj.getYear(), month, 0).getDate();
 
 while (date > 1) {
   if (weekday > 0) {
