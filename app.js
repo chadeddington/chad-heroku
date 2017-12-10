@@ -28,6 +28,9 @@ app.get('/typewriter', function(req, res) {
 app.get('/calendar', function(req, res) {
   res.render('imageCalendar');
 });
+app.get('/masonry', function(req, res) {
+  res.render('masonry');
+});
 
 // Helpers
 app.get('/getGooglePhotos/:albumId', calendar.getPhotos);
