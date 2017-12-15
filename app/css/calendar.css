@@ -8,7 +8,7 @@ h1.header {
   background-color: #EEEEEE;
   display: inline-block;
   width: 200px;
-  height: 200px;
+  height: calc(15vh - 50px);
   position: relative;
 }
 
