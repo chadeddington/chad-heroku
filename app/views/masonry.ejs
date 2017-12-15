@@ -4,12 +4,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Mason</title>
+  <title>Masonry</title>
   <style>
     .grid {
        display: grid;
        grid-gap: 10px;
-       grid-template-columns: repeat(auto-fill, minmax(200px,1fr));
+       grid-template-columns: repeat(auto-fill, minmax(200px,210px));
        grid-auto-flow: dense;
        grid-auto-rows: 10px;
 
@@ -27,6 +27,28 @@
   <h1>CSS Grid Masonry</h1>
 
   <div class="grid">
+    <div class="photo">
+      <img src="http://lorempixel.com/200/400/food" alt="">
+    </div>
+    <div class="photo">
+      <img src="http://lorempixel.com/200/200/city" alt="">
+    </div>
+    <div class="photo">
+      <img src="http://lorempixel.com/200/400/sports" alt="">
+    </div>
+    <div class="photo">
+      <img src="http://lorempixel.com/200/100/cats" alt="">
+    </div>
+    <div class="photo">
+      <img src="http://lorempixel.com/200/400/technics" alt="">
+    </div>
+    <div class="photo">
+      <img src="http://lorempixel.com/200/300/transport" alt="">
+    </div>
+    <div class="photo">
+      <img src="http://lorempixel.com/200/200/city" alt="">
+    </div>
+
     <div class="photo">
       <img src="http://lorempixel.com/200/400/food" alt="">
     </div>
@@ -75,7 +97,7 @@
 
     allItems = document.getElementsByClassName("photo");
     for(x=0;x<allItems.length;x++){
-    imagesLoaded( allItems[x], resizeInstance);
+      imagesLoaded( allItems[x], resizeInstance);
     }
   </script>
 </body>
