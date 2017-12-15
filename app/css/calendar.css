@@ -8,17 +8,20 @@ h1.header {
   background-color: #EEEEEE;
   display: inline-block;
   width: 200px;
-  height: calc(15vh - 50px);
+  height: calc(15vh - 10px);
   position: relative;
 }
 
 .wrapper {
   max-width: 1420px;
-  max-height: 1200px;
   width: 100vw;
-  height: 100vw;
   margin: auto;
   text-align: center;
+}
+
+.cal-panel {
+  height: calc(100vh - 0px);
+  padding-top: 50px;
 }
 
 .date {
@@ -128,10 +131,23 @@ h1.header {
   left: 0px;
 }
 
+.intro-panel {
+  min-height: calc(100vh - 150px);
+  background-color: white;
+}
+
+.header-panel {
+  background-color: lightgreen;
+  padding-top: 70px;
+  padding-bottom: 50px;
+}
+
 p {
-  max-width: 1400px;
+  max-width: 800px;
   padding: 50px;
   margin: auto;
+  text-align: justify;
+  line-height: 1.5;
 }
 
 

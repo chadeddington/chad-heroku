@@ -90,19 +90,16 @@ function handleGooglePhotosResponse(response) {
     }
   })
   if (count > 15 || outsideRange || response.feed.entry.length < 1000) {
-    console.log(pix);
     // grab dates for pictures
     var results = pix.map(pic => {
       var result = {};
       var picDate = new Date(parseInt(pic.gphoto$timestamp.$t));
       result.date = picDate.toLocaleString().match(/\/(\d+)\//)[1];
-      console.log(result.date);
       result.thumb = pic.media$group.media$thumbnail[0].url;
       result.full = pic.media$group.media$content[0].url;
       result.type = pic.media$group.media$content[0].type;
       return result;
     })
-    console.log("Results: ", results);
     displayImages(results);
   } else {
     // keep getting fetching
@@ -124,6 +121,11 @@ function displayImages(images) {
     img.style.backgroundSize = 'cover';
     img.thumb = image.thumb;
     img.full = image.full;
+    // Create the actual image tag to preload the imagesLoaded
+    var preload = document.createElement('img');
+    preload.src = image.full;
+    preload.style.display = 'none';
+    $('body').appendChild(preload);
   })
   $('.loading-text').innerText = "";
   $('.spinner').style.visibility = 'hidden';
@@ -171,9 +173,20 @@ var prevImg = function(e) {
   e.stopPropagation();
 }
 
+// Handle arrow keys
+var handleKeyDown = function(e) {
+  console.log(e.keyCode);
+  if (e.keyCode === 39) {
+    nextImg(e);
+  } else if (e.keyCode === 37) {
+    prevImg(e);
+  }
+}
+
 // Listners
 $('.next-btn').addEventListener('click', nextImg);
 $('.prev-btn').addEventListener('click', prevImg);
+document.addEventListener('keydown', handleKeyDown);
 
 for (var i = 0; i < 42; i++) {
   var day = document.createElement('div');
