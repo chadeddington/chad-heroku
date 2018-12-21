@@ -22,6 +22,7 @@ h1.header {
 .cal-panel {
   height: calc(100vh - 0px);
   padding-top: 50px;
+  margin-bottom: 150px;
 }
 
 .date {
