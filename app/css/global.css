@@ -1,0 +1,43 @@
+*, html {
+  padding: 0px;
+  margin: 0px;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  background-color: #fff;
+  padding: 0px;
+  margin: 0px;
+  font-family: 'Abel', sans-serif;
+  font-size: 18px;
+}
+nav {
+  font-family: 'Abel', sans-serif;
+  position: relative;
+  top: 0px;
+  width: 100%;
+  z-index: 100;
+}
+nav a {
+  text-decoration: none;
+  color: black;
+  font-size: 20px;
+}
+.nav {
+    margin: auto;
+    padding: 15px;
+    text-align: center;
+}
+.app-wrapper {
+  max-width: 1200px;
+  margin: auto;
+  padding: 20px;
+  min-height: calc(100vh - 140px);
+}
+
+.app-wrapper h1 {
+  text-align: center;
+}

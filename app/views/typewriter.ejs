@@ -1,32 +1,43 @@
 <!DOCTYPE html>
+
 <html lang="en">
-<%- include partials/global.ejs %>
+<head>
+  <%- include partials/global-head.ejs %>
+</head>
 <style>
-  body {
-    font-family: 'Open Sans';
-  }
-  textarea {
-    margin: auto;
-    display: block;
-    font-size: 22px;
-    width: 600px;
-    height: 200px;
-    font-family: monospace;
+  #message {
+    font-size: 18px;
+    width: 400px;
+    height: 40px;
   }
   button {
-    padding: 20px;
-    font-size: 22px;
-    display: block;
-    margin: auto;
+    padding: 10px;
+    font-size: 18px;
     background-color: deepskyblue;
-    width: 600px;
-    font-family: monospace;
+    width: 100px;
+  }
+
+  .input-wrapper {
+    margin: auto;
+    text-align: center;
+  }
+
+  .app-wrapper {
+    position: relative;
+    top: 200px;
   }
 
   #paper {
+    margin: auto;
     margin-top: 50px;
     text-align: center;
     font-family: monospace;
+    width: 580px;
+    padding: 10px;
+    font-size: 24px;
+    min-height: 200px;
+    border: 1px solid #ddd;
+    box-shadow: 3px 3px 4px #ddd;
   }
 </style>
 <body>
@@ -35,8 +46,10 @@
     <h1>Typewriter</h1>
     <br>
 
-    <textarea name="message" id="message" autofocus placeholder="Enter a message into the typewriter!"></textarea>
-    <button onClick='print()'>Print</button>
+    <div class="input-wrapper">
+      <input name="message" id="message" autofocus placeholder="Enter text"></input>
+      <button onClick='print()'>Print</button>
+    </div>
 
     <div id="paper"></div>
   </div>

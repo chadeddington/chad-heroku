@@ -1,44 +1,39 @@
 <html>
-  <%- include partials/global.ejs %>
-  <style>
-    body, html {
-      height: 100%;
-      margin: 0px;
-    }
-    body {
-      background-color: #EEE;
-      color: black;
-      font-family: Verdana;
-    }
-    .game-wrapper {
-      text-align: center;
-    }
-    #scoreBoard {
-      text-align: center;
-      padding-top: 50px;
-    }
-    #gameOver {
-      text-align: center;
-      margin-bottom: 50px;
-    }
-    button {
-      padding: 10px;
-    }
-    canvas {
-      border: 2px solid white;
-      background-color: black;
-    }
-  </style>
+  <head>
+    <%- include partials/global-head.ejs %>
+    <style>
+      .game-wrapper {
+        text-align: center;
+        position: relative;
+        top: 200px;
+      }
+      #scoreBoard {
+        text-align: center;
+        padding-top: 50px;
+      }
+      #gameOver {
+        text-align: center;
+        margin-bottom: 50px;
+      }
+      button {
+        padding: 10px;
+      }
+      canvas {
+        border: 2px solid white;
+        background-color: black;
+      }
+    </style>
+  </head>
   <body>
     <%- include partials/nav.ejs %>
-    <div id="scoreBoard">
-      <h1>Score: <span id="score">0</span></h1>
-      <div id="gameOver" hidden>
-        <h2>Game Over.</h2>
-        <button onclick="window.location.reload()">Retry</button>
-      </div>
-    </div>
     <div class="game-wrapper">
+      <div id="scoreBoard">
+        <h1>Score: <span id="score">0</span></h1>
+        <div id="gameOver" hidden>
+          <h2>Game Over.</h2>
+          <button onclick="window.location.reload()">Retry</button>
+        </div>
+      </div>
       <canvas width=400 height=400></canvas>
     </div>
 

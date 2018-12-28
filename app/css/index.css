@@ -1,0 +1,14 @@
+.hero {
+  font-size: 36px;
+  padding: 20vh 0px;
+  position: relative;
+  height: 100%;
+}
+
+.hero h2 {
+  margin-top: 50px;
+  font-size: 32px;
+  text-align: center;
+  font-family: 'Source Serif Pro', serif;
+  font-weight: normal;
+}
