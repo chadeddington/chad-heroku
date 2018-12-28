@@ -138,9 +138,11 @@ h1.header {
 }
 
 .header-panel {
-  background-color: skyblue;
+  background-color: #988DAB;
+  color: white;
   padding-top: 70px;
   padding-bottom: 50px;
+  font-family: 'Source Serif Pro', serif;
 }
 
 p {

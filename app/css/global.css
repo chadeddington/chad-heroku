@@ -1,6 +1,7 @@
 *, html {
   padding: 0px;
   margin: 0px;
+  letter-spacing: 1.1px;
 }
 
 html, body {
@@ -20,11 +21,13 @@ nav {
   top: 0px;
   width: 100%;
   z-index: 100;
+  border-bottom: 1px solid #988DAB;
 }
 nav a {
   text-decoration: none;
   color: black;
   font-size: 20px;
+  letter-spacing: 1.1px;
 }
 .nav {
     margin: auto;
@@ -34,7 +37,7 @@ nav a {
 .app-wrapper {
   max-width: 1200px;
   margin: auto;
-  padding: 20px;
+  padding: 50px;
   min-height: calc(100vh - 140px);
 }
 
