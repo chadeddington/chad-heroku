@@ -1,0 +1,19 @@
+.App {
+  text-align: center;
+  padding: 5px
+}
+
+.photo-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.image {
+  height: 300px;
+  margin: 0px 5px;
+}
+
+button {
+  padding: 10px;
+  font-size: 22px;
+}
