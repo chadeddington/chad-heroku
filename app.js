@@ -33,6 +33,7 @@ app.get('/masonry', function(req, res) {
 });
 
 app.get('/react', (req, res) => {
+  console.log('load react app');
   res.sendFile(__dirname + '/app/react-chad/build/index.html');
 })
 
