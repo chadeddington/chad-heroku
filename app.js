@@ -26,7 +26,7 @@ app.get('/typewriter', function(req, res) {
   res.render('typewriter');
 });
 app.get('/calendar', function(req, res) {
-  res.render('imageCalendar');
+  res.sendFile(__dirname + '/app/react-chad/build/index.html');
 });
 app.get('/masonry', function(req, res) {
   res.render('masonry');

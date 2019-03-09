@@ -1,19 +1,10 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import Searchbar from './components/Searchbar.js';
 
 class App extends Component {
-  state = {googlePhotos: [], page: ''}
-
-  googleSignIn = () => {
-    this.GOOGLE_AUTH.signIn().then(e => {
-      this.googleToken = window.gapi.auth2.getAuthInstance().currentUser.get().getAuthResponse().access_token;
-      debugger;
-   }).catch(e => {
-     console.error(e)
-     debugger;
-   })
-  }
+  state = {googlePhotos: [], month: new Date().getMonth() + 1, year: new Date().getFullYear()}
 
   debounce(func, wait) {
     let timeout;
@@ -52,21 +43,6 @@ class App extends Component {
       });
     }
 
-    // Add scroll listener
-
-    // let photoWrapper = document.querySelector('.photo-wrapper');
-    // console.log('photo wrapper ', photoWrapper);
-    window.addEventListener('scroll', this.debounce(_ => {
-        console.log('scroll')
-        let clientHeight = document.documentElement.clientHeight;
-        let scrollHeight = document.documentElement.scrollHeight
-        // If the user scrolls within 100 px of the bottom
-        if (scrollHeight - 100 < clientHeight + document.documentElement.scrollTop) {
-          this.listMedia();
-        }
-      }, 500)
-    )
-
     // fetch('/express-backend').then(res => {
     //   res.json().then(data => {
     //     console.log('testing: ', data);
@@ -76,34 +52,38 @@ class App extends Component {
     // })
   }
 
-  signIn = () => {
+  signIn = (searchDate) => {
     this.GOOGLE_AUTH.signIn().then(e => {
       this.auth_token = this.GOOGLE_AUTH.currentUser.get().getAuthResponse().access_token;
       // this.listAlbums();
-      this.listMedia();
+      this.listMedia(searchDate);
     });
   }
 
-  listAlbums = () => {
-    console.log('list items called');
-
-    fetch(`https://photoslibrary.googleapis.com/v1/albums?access_token=${this.auth_token}`)
-      .then(res => res.json().then(data => {
-        console.log(data)
-      }))
-      .catch(err => {
-        console.log(err);
-      })
-  }
-
-  listMedia = () => {
+  listMedia = ({month, year}) => {
     if (this.requestOut) return; //prevent duplicate requests
     this.requestOut = true;
-    fetch(`https://photoslibrary.googleapis.com/v1/mediaItems?access_token=${this.auth_token}&pageToken=${this.state.page}`)
+    const filters = {
+      filters: {
+        dateFilter: {
+          dates: [
+            {
+              month,
+              year
+            }
+          ]
+        }
+      }
+    }
+    const config = {
+      method: 'POST',
+      body: JSON.stringify(filters)
+    }
+    fetch(`https://photoslibrary.googleapis.com/v1/mediaItems:search?access_token=${this.auth_token}&pageSize=100`, config)
       .then(res => res.json().then(data => {
-        // Concat new array of photos to existing array of photos
-        // Update the page to fetch next
-        this.setState(state => ({googlePhotos: state.googlePhotos.concat(data.mediaItems), page: data.nextPageToken})); 
+        console.log(data)
+        // Month does not come in 0 based
+        this.setState(state => ({googlePhotos: data.mediaItems, month: month, year})); 
         this.requestOut = false; // Allow new requests to be made
       }))
       .catch(err => {
@@ -111,23 +91,89 @@ class App extends Component {
       })
   }
 
+  drawCalendar() {
+    // month needs to be 0 based
+    let dateObj = new Date(this.state.year, this.state.month - 1);
+    let date = dateObj.getDate();
+    let weekday = dateObj.getDay()
+    const monthDays = new Date(this.state.year, this.state.month, 0).getDate();
+
+    while (date > 1) {
+      if (weekday > 0) {
+        weekday-- ;
+      } else {
+        weekday = 6;
+      }
+      date--;
+    }
+    var offset = weekday;
+    let dayArray = Array(42).fill(<div className="day"></div>);
+
+    // Add empty days to beginning and end of calendar array
+    dayArray.fill(<div className="day empty"></div>, 0, offset);
+    dayArray.fill(<div className="day empty"></div>, monthDays + offset);
+
+    if (this.state.googlePhotos) {
+      // this.organizePhotos(dayArray, offset)
+      // this.state.googlePhotos.map( (photo) => {
+      // let day = photo.mediaMetadata.creationTime.match(/(\d+)/g)[2]
+      // })
+
+      for (let i = 0; i < this.state.googlePhotos.length; i++) {
+        let photo = this.state.googlePhotos[i];
+        let day = photo.mediaMetadata.creationTime.match(/(\d+)/g)[2];
+        dayArray[Number(day) + offset] = <div className="day" style={{backgroundImage: `url(${photo.baseUrl})`}}></div>
+      }
+      
+    }
+
+    return dayArray
+  }
 
   render() {
+    const months = [
+      'January',
+      'February',
+      'March',
+      'April',
+      'May',
+      'June',
+      'July',
+      'August',
+      'September',
+      'October',
+      'November',
+      'December'
+    ]
+
     return (
       <div className="App">
-        <button onClick={this.signIn}>List Albums</button>
+        <div className="header">
+          <h1>Image Calendar</h1>
+        </div>
+
+        <Searchbar search={this.signIn}/>
+        <div className="google-logo-container">Powered by <span className="googleLogo"></span></div>
+
+        <h1>{`${months[this.state.month - 1]} ${this.state.year}`}</h1>
+        <div>
+          {this.drawCalendar()}
+        </div>
+
         <div className="photo-wrapper">
         {
           (this.state.googlePhotos) ? this.state.googlePhotos.map((photo, i) => (
-            (photo.mimeType.indexOf('video') === -1) ? <div>
+            <div>
               <a href={photo.productUrl} target="_blank" rel="noopener noreferrer">
                 <img className="image" key={i} src={photo.baseUrl} alt={photo.filename}></img>
               </a>
-            </div> : ''
+            </div>
             )
           ) : ''
         }
         </div>
+
+        
       </div>
     );
   }
