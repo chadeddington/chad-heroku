@@ -13,10 +13,13 @@
 
 
 .photo-wrapper {
-  display: flex;
-  flex-wrap: wrap;
-  margin-top: 100px;
+  display: grid;
+  grid-template-columns: 7fr 7fr 7fr 7fr 7fr 7fr 7fr;
+  grid-template-rows: 6fr 6fr 6fr 6fr 6fr 6fr;
+  margin-top: 50px;
   justify-content: center;
+  height: calc(100vw - 250px);
+  padding: 50px;
 }
 
 .image {
@@ -44,17 +47,57 @@
 }
 
 .day {
-  width: calc(100% / 7 - 10px);
-  height: 150px;
   display: inline-block;
   background-color: #eee;
   border: 1px solid grey;
   padding: 0;
+  position: relative;
   margin: 3px;
   background-position: center;
   background-size: cover;
 }
 
+.cal-date {
+  position: absolute;
+  right: 0px;
+  width: 25px;
+  height: 25px;
+  font-size: 1em;
+  background-color: rgba(255,255,255,.6);
+  color: black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .empty {
   background-color: white;
+}
+
+.image-length {
+  position: absolute;
+  display: none;
+  bottom: 0px;
+  width: 25px;
+  height: 25px;
+  background-color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (max-width: 789px) {
+  .photo-wrapper {
+    padding: 0;
+    height: calc(100vw - 100px);
+  }
+
+  .image-length {
+    display: none
+  }
+
+  .cal-date {
+    font-size: 1em;
+    background-color: rgba(200,200,200,.4);
+  }
 }

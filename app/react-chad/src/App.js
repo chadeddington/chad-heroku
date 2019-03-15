@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import Searchbar from './components/Searchbar.js';
+import Day from './components/Day.js';
 
 class App extends Component {
   state = {googlePhotos: [], month: new Date().getMonth() + 1, year: new Date().getFullYear()}
@@ -53,6 +54,10 @@ class App extends Component {
   }
 
   signIn = (searchDate) => {
+    // testing
+    // this.listMedia(searchDate)
+    // return;
+
     this.GOOGLE_AUTH.signIn().then(e => {
       this.auth_token = this.GOOGLE_AUTH.currentUser.get().getAuthResponse().access_token;
       // this.listAlbums();
@@ -80,6 +85,7 @@ class App extends Component {
       body: JSON.stringify(filters)
     }
     fetch(`https://photoslibrary.googleapis.com/v1/mediaItems:search?access_token=${this.auth_token}&pageSize=100`, config)
+    // fetch('./sample.json')
       .then(res => res.json().then(data => {
         console.log(data)
         // Month does not come in 0 based
@@ -107,24 +113,30 @@ class App extends Component {
       date--;
     }
     var offset = weekday;
-    let dayArray = Array(42).fill(<div className="day"></div>);
+    let monthArray = Array(42).fill(null)
 
     // Add empty days to beginning and end of calendar array
-    dayArray.fill(<div className="day empty"></div>, 0, offset);
-    dayArray.fill(<div className="day empty"></div>, monthDays + offset);
+    // dayArray.fill(<Day classes="day empty" />, 0, offset);
+    // dayArray.fill(<Day classes="day empty" />, monthDays + offset);
 
-    if (this.state.googlePhotos) {
-      // this.organizePhotos(dayArray, offset)
-      // this.state.googlePhotos.map( (photo) => {
-      // let day = photo.mediaMetadata.creationTime.match(/(\d+)/g)[2]
-      // })
-
-      for (let i = 0; i < this.state.googlePhotos.length; i++) {
-        let photo = this.state.googlePhotos[i];
-        let day = photo.mediaMetadata.creationTime.match(/(\d+)/g)[2];
-        dayArray[Number(day) + offset] = <div className="day" style={{backgroundImage: `url(${photo.baseUrl})`}}></div>
+    let dayArray = monthArray.map( (day, i) => {
+      if (i < offset || i >= monthDays + offset) {
+        return {};
+      } else {
+        return {date: i - offset + 1, images: []};
       }
-      
+    });
+
+    if (this.state.googlePhotos.length) {
+      this.state.googlePhotos.forEach( (photo) => {
+        let day = photo.mediaMetadata.creationTime.match(/(\d+)/g)[2]
+        dayArray[Number(day) + offset - 1].images.push(photo.baseUrl);
+        // dayArray[Number(day) + offset - 1] = (
+        //   <div className="day" style={{backgroundImage: `url(${photo.baseUrl})`}}>
+        //     <span className="cal-date">{day}</span>
+        //   </div>
+        // )
+      })
     }
 
     return dayArray
@@ -146,6 +158,8 @@ class App extends Component {
       'December'
     ]
 
+    const dayArray = this.drawCalendar();
+
     return (
       <div className="App">
         <div className="header">
@@ -156,11 +170,20 @@ class App extends Component {
         <div className="google-logo-container">Powered by <span className="googleLogo"></span></div>
 
         <h1>{`${months[this.state.month - 1]} ${this.state.year}`}</h1>
-        <div>
-          {this.drawCalendar()}
+        <div className="photo-wrapper">
+          {
+
+            dayArray.map(day => {
+              if (!day.date) {
+                return <Day classes="day empty"/>
+              } else {
+                return <Day classes="day" {...day} />
+              }
+            })
+          }
         </div>
 
-        <div className="photo-wrapper">
+        <div>
         {
           (this.state.googlePhotos) ? this.state.googlePhotos.map((photo, i) => (
             <div>

@@ -8,19 +8,19 @@ self.__precacheManifest = [
     "url": "/react-chad/build/static/js/runtime~main.2425e72c.js"
   },
   {
-    "revision": "b1e1cbae739ebc660552",
-    "url": "/react-chad/build/static/js/main.b1e1cbae.chunk.js"
+    "revision": "980febe8965fff370840",
+    "url": "/react-chad/build/static/js/main.980febe8.chunk.js"
   },
   {
     "revision": "393dcb4e7070c2b25ee3",
     "url": "/react-chad/build/static/js/1.393dcb4e.chunk.js"
   },
   {
-    "revision": "b1e1cbae739ebc660552",
-    "url": "/react-chad/build/static/css/main.b16fe323.chunk.css"
+    "revision": "980febe8965fff370840",
+    "url": "/react-chad/build/static/css/main.400ccbce.chunk.css"
   },
   {
-    "revision": "6f0365135ee4369a866d7177334ccd21",
+    "revision": "bc4d9dcbb25ce42cdc41183179d8093f",
     "url": "/react-chad/build/index.html"
   }
 ];
