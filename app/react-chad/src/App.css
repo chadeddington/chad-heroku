@@ -1,6 +1,8 @@
 .App {
   text-align: center;
-  padding: 5px
+  padding: 5px;
+  max-width: 1400px;
+  margin: auto;
 }
 
 .header {
@@ -16,10 +18,11 @@
   display: grid;
   grid-template-columns: 7fr 7fr 7fr 7fr 7fr 7fr 7fr;
   grid-template-rows: 6fr 6fr 6fr 6fr 6fr 6fr;
-  margin-top: 50px;
   justify-content: center;
   height: calc(100vw - 250px);
-  padding: 50px;
+  max-height: 950px;
+  max-width: 1200px;
+  margin: auto;
 }
 
 .image {
@@ -49,7 +52,6 @@
 .day {
   display: inline-block;
   background-color: #eee;
-  border: 1px solid grey;
   padding: 0;
   position: relative;
   margin: 3px;

@@ -28,12 +28,16 @@ app.get('/typewriter', function(req, res) {
 app.get('/calendar', function(req, res) {
   res.sendFile(__dirname + '/app/react-chad/build/index.html');
 });
+
+app.get('/old-calendar', function(req, res) {
+  res.render('imageCalendar');
+});
+
 app.get('/masonry', function(req, res) {
   res.render('masonry');
 });
 
 app.get('/react', (req, res) => {
-  console.log('load react app');
   res.sendFile(__dirname + '/app/react-chad/build/index.html');
 })
 

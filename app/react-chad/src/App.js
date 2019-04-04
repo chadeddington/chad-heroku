@@ -93,7 +93,7 @@ class App extends Component {
         this.requestOut = false; // Allow new requests to be made
       }))
       .catch(err => {
-        console.log(err);
+        alert('There was a problem ', err)
       })
   }
 
