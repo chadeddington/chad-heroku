@@ -3,9 +3,14 @@ import logo from './logo.svg';
 import './App.css';
 import Searchbar from './components/Searchbar.js';
 import Day from './components/Day.js';
+import ImageViewer from './components/ImageViewer.js';
 
 class App extends Component {
-  state = {googlePhotos: [], month: new Date().getMonth() + 1, year: new Date().getFullYear()}
+  state = {
+    googlePhotos: [], 
+    month: new Date().getMonth() + 1, 
+    year: new Date().getFullYear()
+  }
 
   debounce(func, wait) {
     let timeout;
@@ -172,30 +177,17 @@ class App extends Component {
         <h1>{`${months[this.state.month - 1]} ${this.state.year}`}</h1>
         <div className="photo-wrapper">
           {
-
             dayArray.map(day => {
               if (!day.date) {
-                return <Day classes="day empty"/>
+                return <Day classes="day empty" dayClick={this.dayClick}/>
               } else {
-                return <Day classes="day" {...day} />
+                return <Day classes="day" {...day} dayClick={this.dayClick}/>
               }
             })
           }
         </div>
 
-        <div>
-        {
-          (this.state.googlePhotos) ? this.state.googlePhotos.map((photo, i) => (
-            <div>
-              <a href={photo.productUrl} target="_blank" rel="noopener noreferrer">
-                <img className="image" key={i} src={photo.baseUrl} alt={photo.filename}></img>
-              </a>
-            </div>
-            )
-          ) : ''
-        }
-        </div>
-
+        <ImageViewer items={this.state.viewItems} openModal={this.state.openModal} />
         
       </div>
     );

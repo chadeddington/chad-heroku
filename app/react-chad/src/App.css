@@ -99,7 +99,13 @@
   }
 
   .cal-date {
-    font-size: 1em;
+    font-size: 10px;
     background-color: rgba(200,200,200,.4);
+    width: 15px;
+    height: 15px;
+  }
+
+  .dialog-content {
+    margin: 5px !important;
   }
 }
