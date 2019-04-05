@@ -32,6 +32,7 @@ nav a {
 .nav {
     margin: auto;
     padding: 15px 50px;
+    max-width: 1200px;
 }
 .app-wrapper {
   max-width: 1200px;
