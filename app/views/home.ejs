@@ -7,51 +7,32 @@
 </head>
 <body>
   <%- include partials/nav.ejs %>
-  <div class="app-wrapper">
-    <div class="hero">
-      <h2>I build web apps.</h2>
+  <div class="intro-card">
+    <div class="intro">
+      Hi, I'm Chad.<br>
+      I build web things.
     </div>
-  
-    <div class="section-label">
-      Stuff.
-    </div>
+  </div>
 
-    <div class="flex-wrapper">
-      <div class="grid-item-50 snake card">
-        <a href="/snake">
-        <h3>
-          HTML5 Snake
-        </h3>
-        <p>
-          The classic Snake game with an HTML flavor.
-        </p>
-        </a>
-          
-      </div>
-
-      <div class="grid-item-50 typewriter card">
-        <a href="/typewriter"> 
-        <h3>
-          Typewriter
-        </h3>
-        <p>
-          Watch your text print one letter at a time.
-        </p>
-        </a>
-      </div>
-    </div>
-
-    <div class="calendar card">
+  <div class="projects-card">
+    <div class="projects">
+      <h3>Projects</h3>
       <a href="/calendar">
-      <h3>
-        Memory Calendar
-      </h3>
-      <p>
-        Take a stroll down memory lane by taking a look back to last year.
-      </p>
+        <img class="preview" src="../img/calendar.png" />
+      </a href="/calendar">
+    </div>
+  </div>
+  <div class="sandbox-card">
+    <div class="projects">
+      <h3>Sandbox</h3>
+      <a href="/masonry">
+        <img class="preview" src="../img/perf-grid.png" />
+      </a>
+
+      <a href="/snake">
+        <img class="preview" src="../img/snake.png" />
       </a>
     </div>
-    
   </div>
 </body>
 </html>

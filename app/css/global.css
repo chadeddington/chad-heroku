@@ -17,15 +17,16 @@ body {
 }
 nav {
   font-family: 'Abel', sans-serif;
-  position: relative;
+  position: absolute;
   top: 0px;
   width: 100%;
+  background-color: transparent;
   z-index: 100;
-  border-bottom: 1px solid #988DAB;
+  border-bottom: 4px solid #2196f3;
 }
 nav a {
   text-decoration: none;
-  color: black;
+  color: white;
   font-size: 20px;
   letter-spacing: 1.1px;
 }
@@ -34,12 +35,7 @@ nav a {
     padding: 15px 50px;
     max-width: 1200px;
 }
-.app-wrapper {
-  max-width: 1200px;
-  margin: auto;
-  padding: 50px;
-  min-height: calc(100vh - 140px);
-}
+
 
 .app-wrapper h1 {
   text-align: center;

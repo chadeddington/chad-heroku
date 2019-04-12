@@ -1,17 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Masonry</title>
+  <%- include partials/global-head.ejs %>
+  <title>Chad Eddington</title>
   <style>
+    nav a {
+      color: black;
+    }
+    .grid-wrapper {
+      margin-top: 150px;
+    }
+
     .grid {
-       display: grid;
-       grid-gap: 10px;
-       grid-template-columns: repeat(auto-fill, minmax(200px,210px));
-       grid-auto-flow: dense;
-       grid-auto-rows: 10px;
+      display: grid;
+      grid-gap: 10px;
+      grid-template-columns: repeat(auto-fill, minmax(200px,210px));
+      grid-auto-flow: dense;
+      grid-auto-rows: 10px;
 
     }
     .photo {
@@ -24,51 +29,55 @@
 
 </head>
 <body>
-  <h1>CSS Grid Masonry</h1>
+  <%- include partials/nav.ejs %>
+  <div class="grid-wrapper">
+    
+    <h1>CSS Grid Masonry</h1>
 
-  <div class="grid">
-    <div class="photo">
-      <img src="http://lorempixel.com/200/400/food" alt="">
-    </div>
-    <div class="photo">
-      <img src="http://lorempixel.com/200/200/city" alt="">
-    </div>
-    <div class="photo">
-      <img src="http://lorempixel.com/200/400/sports" alt="">
-    </div>
-    <div class="photo">
-      <img src="http://lorempixel.com/200/100/cats" alt="">
-    </div>
-    <div class="photo">
-      <img src="http://lorempixel.com/200/400/technics" alt="">
-    </div>
-    <div class="photo">
-      <img src="http://lorempixel.com/200/300/transport" alt="">
-    </div>
-    <div class="photo">
-      <img src="http://lorempixel.com/200/200/city" alt="">
-    </div>
+    <div class="grid">
+      <div class="photo">
+        <img src="http://lorempixel.com/200/400/technics" alt="">
+      </div>
+      <div class="photo">
+        <img src="http://lorempixel.com/200/200/city" alt="">
+      </div>
+      <div class="photo">
+        <img src="http://lorempixel.com/200/400/sports" alt="">
+      </div>
+      <div class="photo">
+        <img src="http://lorempixel.com/200/100/cats" alt="">
+      </div>
+      <div class="photo">
+        <img src="http://lorempixel.com/200/400/food" alt="">
+      </div>
+      <div class="photo">
+        <img src="http://lorempixel.com/200/300/transport" alt="">
+      </div>
+      <div class="photo">
+        <img src="http://lorempixel.com/200/200/abstract" alt="">
+      </div>
 
-    <div class="photo">
-      <img src="http://lorempixel.com/200/400/food" alt="">
-    </div>
-    <div class="photo">
-      <img src="http://lorempixel.com/200/200/city" alt="">
-    </div>
-    <div class="photo">
-      <img src="http://lorempixel.com/200/400/sports" alt="">
-    </div>
-    <div class="photo">
-      <img src="http://lorempixel.com/200/100/cats" alt="">
-    </div>
-    <div class="photo">
-      <img src="http://lorempixel.com/200/400/technics" alt="">
-    </div>
-    <div class="photo">
-      <img src="http://lorempixel.com/200/300/transport" alt="">
-    </div>
-    <div class="photo">
-      <img src="http://lorempixel.com/200/200/city" alt="">
+      <div class="photo">
+        <img src="http://lorempixel.com/200/400/business" alt="">
+      </div>
+      <div class="photo">
+        <img src="http://lorempixel.com/200/200/nightlife" alt="">
+      </div>
+      <div class="photo">
+        <img src="http://lorempixel.com/200/400/fashion" alt="">
+      </div>
+      <div class="photo">
+        <img src="http://lorempixel.com/200/100/people" alt="">
+      </div>
+      <div class="photo">
+        <img src="http://lorempixel.com/200/400/" alt="">
+      </div>
+      <div class="photo">
+        <img src="http://lorempixel.com/200/300/" alt="">
+      </div>
+      <div class="photo">
+        <img src="http://lorempixel.com/200/200/" alt="">
+      </div>
     </div>
   </div>
   <script>
