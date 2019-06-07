@@ -17,16 +17,11 @@
   <div class="projects-wrapper">
     <h3>Projects</h3>
     <div class="projects">
-      <a href="/calendar">
+      <a id="cal" href="/calendar">
         <img class="preview" src="../img/calendar.png" />
       </a href="/calendar">
-    </div>
-  </div>
-  <div class="sandbox-wrapper">
-    <h3>Sandbox</h3>
-    <div class="projects">
       <a href="/masonry">
-        <img class="preview" src="../img/perf-grid.png" />
+        <img class="preview" src="../img/grid.png" />
       </a>
 
       <a href="/snake">
@@ -34,5 +29,49 @@
       </a>
     </div>
   </div>
+  <script>
+    // var cal = document.getElementById('cal');
+    // var wrapper = document.querySelector('.projects-wrapper');
+    // var left = 0;
+    // var y = 0;
+    // var movingRight = true
+    // var movingDown = true;
+    // var animation = setInterval(() => {
+    //   if (movingRight) {
+    //     if (left >= wrapper.getBoundingClientRect().width - 450) {
+    //       movingRight = false
+    //     } else {
+    //       left += 2;
+    //       cal.style.left = left + 'px';
+    //     }
+    //   } else {
+    //     if (left < 0 - 250) {
+    //       movingRight = true
+    //     }
+    //     left -= 2;
+    //     cal.style.left = left + 'px';
+    //   }
+
+    //   if (movingDown) {
+    //     if (y >= wrapper.getBoundingClientRect().height - 500) {
+    //       movingDown = false
+    //     } else {
+    //       y += 2;
+    //       cal.style.top = y + 'px';
+    //     }
+    //   } else {
+    //     if (y < 0) {
+    //       movingDown = true;
+    //     } else {
+    //       y -= 2;
+    //       cal.style.top = y + 'px';
+    //     }
+    //   }
+      
+    //   console.log(left)
+    // }, 10)
+  
+  </script>
+  <%- include partials/footer.ejs %>
 </body>
 </html>

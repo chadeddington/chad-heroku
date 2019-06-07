@@ -1,14 +1,11 @@
+footer {
+  background-color: black;
+  min-height: 250px;
+}
+
 .intro-card {
   height: 100%;
-  background: linear-gradient(
-      to bottom right,
-      rgba(0,0,0,.85),
-      rgba(0,0,0,.45),
-      rgba(0,0,0,.45),
-      rgba(0,0,0,.85)
-    ),
-    url("../img/perf-computer.jpg");
-  /* background-image: url("../img/dillon-shook-511764-unsplash.jpg"); */
+  background-image: linear-gradient(to right, #29282A, #1D2026);
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -19,7 +16,7 @@
   max-width: 1200px;
   margin: auto;
   min-height: calc(100vh - 140px);
-  font-size: 6em;
+  font-size: 5em;
   color: white;
   text-align: left;
   padding: 50px;
@@ -32,13 +29,10 @@
 
 .projects-wrapper {
   width: 100%;
-  background: url("../img/perf-paper.jpg");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+  background-image: linear-gradient(to right, #ADD5F6, #60B2E1);
   min-height: 100vh;
   padding-top: 100px;
-  font-size: 6em;
+  font-size: 5em;
 }
 
 .projects {
@@ -55,22 +49,8 @@
 
 }
 
-.sandbox-wrapper {
-  background: url("../img/perf-vinyl.jpg");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  min-height: 100vh;
-  font-size: 6em;
-  padding-top: 100px;
-}
-
 .projects-wrapper h3 {
   color: white;
-}
-
-.sandbox-card h3 {
-  color: black;
 }
 
 h3 {
@@ -81,13 +61,16 @@ h3 {
 }
 
 .preview {
-  width: 400px;
-  border-radius: 10%;
-  
+  width: 200px;
+  border-radius: 30px;
 }
 
 a {
   text-decoration: none;
+}
+
+#cal {
+ position: relative; 
 }
 
 @media (max-width: 767px) {
@@ -96,8 +79,7 @@ a {
   }
 
   .preview {
-    width: 250px;
-    border-radius: 10%;
+    width: 200px;
   }
 
   h3 {
