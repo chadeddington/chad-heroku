@@ -4,15 +4,16 @@
   <%- include partials/global-head.ejs %>
   <title>Chad Eddington</title>
   <link rel="stylesheet" href="css/index.css">
+  <link href="https://fonts.googleapis.com/css?family=Work+Sans:300,400,700&display=swap" rel="stylesheet">
 </head>
 <body>
-  <%- include partials/nav.ejs %>
-  <div class="intro-card">
+  <section class="intro-card">
+    <canvas id="canvas"></canvas>
     <div class="intro">
-      Hi, I'm Chad.<br>
+      Hello, I'm Chad.<br>
       I build web things.
     </div>
-  </div>
+  </section>
 
   <div class="projects-wrapper">
     <h3>Projects</h3>
@@ -30,46 +31,45 @@
     </div>
   </div>
   <script>
-    // var cal = document.getElementById('cal');
-    // var wrapper = document.querySelector('.projects-wrapper');
-    // var left = 0;
-    // var y = 0;
-    // var movingRight = true
-    // var movingDown = true;
-    // var animation = setInterval(() => {
-    //   if (movingRight) {
-    //     if (left >= wrapper.getBoundingClientRect().width - 450) {
-    //       movingRight = false
-    //     } else {
-    //       left += 2;
-    //       cal.style.left = left + 'px';
-    //     }
-    //   } else {
-    //     if (left < 0 - 250) {
-    //       movingRight = true
-    //     }
-    //     left -= 2;
-    //     cal.style.left = left + 'px';
-    //   }
+    const wrapper = document.querySelector('.intro-card');
+    const canvas = document.querySelector('#canvas');
+    canvas.width = wrapper.getBoundingClientRect().width;
+    canvas.height = wrapper.getBoundingClientRect().height;
+    const ctx = canvas.getContext('2d');
+    // const items = [
+    //   {x: 100, y: 100, w: 50},
+    //   {x: 200, y: 100, w: 50},
+    //   {x: 300, y: 100, w: 50},
+    //   {x: 400, y: 100, w: 50},
+    //   {x: 500, y: 100, w: 50},
+    //   {x: 600, y: 100, w: 50},
+    //   {x: 700, y: 100, w: 50},
+    //   {x: 800, y: 100, w: 50},
+    //   {x: 900, y: 100, w: 50},
+    //   {x: 1000, y: 100, w: 50}
+    // ]
+    const items = [];
+    function random(min, max) {
+      return Math.random() * (max - min) + min;
+    }
+    for (let i = 1; i <= 10; i++) {
+      items.push({x: i * 100, y: 100, w: random(50,150), s: random(1, 4)})
+    }
+    let x = 100;
+    let y = 100;
 
-    //   if (movingDown) {
-    //     if (y >= wrapper.getBoundingClientRect().height - 500) {
-    //       movingDown = false
-    //     } else {
-    //       y += 2;
-    //       cal.style.top = y + 'px';
-    //     }
-    //   } else {
-    //     if (y < 0) {
-    //       movingDown = true;
-    //     } else {
-    //       y -= 2;
-    //       cal.style.top = y + 'px';
-    //     }
-    //   }
-      
-    //   console.log(left)
-    // }, 10)
+    
+    setInterval( () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height)
+      ctx.strokeStyle = "white";
+      items.forEach( item => {
+        item.y += item.s;
+        if (item.y >= canvas.height) item.y = 0;
+        ctx.beginPath();
+        ctx.arc(item.x, item.y, item.w, 0, 2 * Math.PI);
+        ctx.stroke();
+      })
+    }, 10)
   
   </script>
   <%- include partials/footer.ejs %>

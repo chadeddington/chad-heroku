@@ -5,23 +5,22 @@ footer {
 
 .intro-card {
   height: 100%;
-  background-image: linear-gradient(to right, #29282A, #1D2026);
+  background-color: #252934;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
 }
 
 .intro {
-  font-family: 'Abel', sans-serif;
+  font-family: 'Work Sans', sans-serif;
   max-width: 1200px;
   margin: auto;
   min-height: calc(100vh - 140px);
-  font-size: 5em;
+  font-size: 3em;
   color: white;
   text-align: left;
   padding: 50px;
-  letter-spacing: -3px;
-  font-weight: bold;
+  font-weight: lighter;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -29,7 +28,7 @@ footer {
 
 .projects-wrapper {
   width: 100%;
-  background-image: linear-gradient(to right, #ADD5F6, #60B2E1);
+  background-color: white;
   min-height: 100vh;
   padding-top: 100px;
   font-size: 5em;
@@ -40,8 +39,6 @@ footer {
   margin: auto;
   padding: 50px;
   text-align: left;
-  letter-spacing: -3px;
-  font-weight: bold;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -50,12 +47,14 @@ footer {
 }
 
 .projects-wrapper h3 {
-  color: white;
+  color: #252934;
+  font-size: .5em;
+  text-transform: uppercase;
 }
 
 h3 {
   text-align: center;
-  font-family: sans-serif;
+  font-family: 'Work Sans', sans-serif;
   font-size: .8em;
   margin-bottom: 50px;
 }
@@ -63,6 +62,7 @@ h3 {
 .preview {
   width: 200px;
   border-radius: 30px;
+  box-shadow: 1px 4px 4px grey;
 }
 
 a {
@@ -73,9 +73,13 @@ a {
  position: relative; 
 }
 
+#canvas {
+  position: absolute;
+}
+
 @media (max-width: 767px) {
   .intro {
-    font-size: 4em;
+    font-size: 2em;
   }
 
   .preview {
