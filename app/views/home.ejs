@@ -53,7 +53,7 @@
       return Math.random() * (max - min) + min;
     }
     for (let i = 1; i <= 10; i++) {
-      items.push({x: i * 100, y: 100, w: random(50,150), s: random(1, 4)})
+      items.push({x: random(100, canvas.width - 150), y: random(-100, canvas.height), w: random(20,100), s: random(1, 6)})
     }
     let x = 100;
     let y = 100;
@@ -61,15 +61,20 @@
     
     setInterval( () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height)
-      ctx.strokeStyle = "white";
+      ctx.strokeStyle = "lightblue";
       items.forEach( item => {
         item.y += item.s;
-        if (item.y >= canvas.height) item.y = 0;
+        if (item.y >= canvas.height) {
+          item.y = -100;
+          item.x = random(100, canvas.width);
+          item.w = random(20, 100);
+          item.s = random(1, 6);
+        }
         ctx.beginPath();
         ctx.arc(item.x, item.y, item.w, 0, 2 * Math.PI);
         ctx.stroke();
       })
-    }, 10)
+    }, 20)
   
   </script>
   <%- include partials/footer.ejs %>
